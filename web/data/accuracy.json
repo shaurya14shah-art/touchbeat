@@ -1,0 +1,28 @@
+{
+ "tuning": {
+  "tp": 11,
+  "fp": 1,
+  "fn": 0,
+  "precision": 0.917,
+  "recall": 1,
+  "f1": 0.957,
+  "sideAcc": 0.818,
+  "maeMs": 36,
+  "biasMs": 2
+ },
+ "holdout": {
+  "tp": 10,
+  "fp": 8,
+  "fn": 1,
+  "precision": 0.556,
+  "recall": 0.909,
+  "f1": 0.69,
+  "sideAcc": null,
+  "maeMs": 63,
+  "biasMs": 5
+ },
+ "labelledTouches": {
+  "tuning": 11,
+  "holdout": 11
+ }
+}

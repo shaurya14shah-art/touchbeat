@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Touchbeat</title>
+<meta name="description" content="A football rhythm trainer that watches your body and your ball through your webcam. Video never leaves your device.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27><circle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%23c8ff2e%27/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="home" class="screen">
+  <section class="hero">
+    <div class="copy">
+      <p class="eyebrow">Football rhythm trainer</p>
+      <h1>Guitar Hero<br>with a <em>real</em><br>football.</h1>
+      <p class="lede">Put your laptop on the floor and step back. Touchbeat watches your feet, your ball and your posture, and tells you the one thing to fix while you play.</p>
+      <form id="picker">
+        <fieldset><legend>Drill</legend><div id="drills" class="chips"></div></fieldset>
+        <fieldset><legend>Tempo</legend><div id="tempos" class="chips"></div></fieldset>
+        <button class="cta" id="start" type="submit">Turn on camera</button>
+      </form>
+      <p class="fine">Camera video stays on this device. Only your nickname and score are sent, and only if you submit them.</p>
+      <nav class="links"><button id="openBoard" class="link" type="button">Leaderboard</button><a class="link" href="lab.html">How it works and how accurate it is</a></nav>
+    </div>
+    <div class="demo" aria-hidden="true"><canvas id="demo"></canvas><p class="demoCap">Motion learned from coaching videos</p></div>
+  </section>
+</main>
+
+<div id="stage" class="screen" hidden>
+  <video id="video" playsinline muted></video>
+  <canvas id="canvas" role="img" aria-label="Your camera view with body tracking lines"></canvas>
+  <div id="setup" class="panel">
+    <h2 id="setupTitle">Get in frame</h2>
+    <ul id="checks"></ul>
+    <button id="virtual" class="ghostBtn" type="button">No ball? Use a virtual one</button>
+  </div>
+  <div id="hud" hidden>
+    <div class="stat left"><span id="combo">0</span><small>combo</small></div>
+    <div class="stat right"><span id="score">0</span><small>score</small></div>
+    <div id="cue" hidden></div>
+    <div id="callout" aria-live="off"></div>
+    <div id="count"></div>
+  </div>
+  <button id="quit" class="ghostBtn quit" type="button">Quit</button>
+</div>
+
+<main id="results" class="screen" hidden>
+  <section class="resultsGrid">
+    <div>
+      <p class="eyebrow" id="rDrill"></p>
+      <div class="scoreLine"><span id="rGrade"></span><span id="rScore"></span></div>
+      <dl class="stats" id="rStats"></dl>
+      <div class="fix"><small>Your one fix</small><strong id="rFix"></strong><p id="rTiming"></p></div>
+      <form id="submitForm" class="submit">
+        <label for="nick">Nickname for the leaderboard</label>
+        <div class="row"><input id="nick" maxlength="16" autocomplete="nickname" required placeholder="2 to 16 letters or numbers"><button class="cta small">Submit</button></div>
+        <p id="submitMsg" class="fine" role="status"></p>
+      </form>
+      <div class="row actions"><button id="again" class="cta small" type="button">Play again</button><button id="change" class="ghostBtn" type="button">Change drill</button><button id="seeBoard" class="ghostBtn" type="button">Leaderboard</button></div>
+    </div>
+    <div class="replayWrap"><canvas id="replay"></canvas><p class="demoCap">Replay at half speed. <b class="you">You</b> and the <b class="gh">coach ghost</b>. No video was saved.</p></div>
+  </section>
+</main>
+
+<main id="board" class="screen" hidden>
+  <section class="boardWrap">
+    <p class="eyebrow" id="boardMode"></p><h2>Leaderboard</h2>
+    <div class="row filters">
+      <label>Drill <select id="bDrill"></select></label><label>Tempo <select id="bTempo"></select></label><label>Ball <select id="bBall"><option value="true">Real ball</option><option value="false">Virtual ball</option></select></label>
+    </div>
+    <ol id="rows"></ol>
+    <p class="fine">Scores are calculated in each player's browser, so treat the ranking as a bit of fun, not proof.</p>
+    <button id="boardBack" class="ghostBtn" type="button">Back</button>
+  </section>
+</main>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

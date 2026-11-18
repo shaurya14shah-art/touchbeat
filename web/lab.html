@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Touchbeat Lab</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27><circle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%23c8ff2e%27/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>.lab{max-width:760px;margin:auto;padding:48px clamp(16px,4vw,32px) 72px}.lab h2{margin:44px 0 12px;font-size:36px}.lab table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.lab th,.lab td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right}.lab th:first-child,.lab td:first-child{text-align:left}.lab th{font:700 15px var(--cond);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}.lab a{color:var(--lime)}.lab li{margin:6px 0}.note{border-left:4px solid var(--amber);padding:6px 16px;background:var(--bg2)}</style>
+</head><body><main class="lab">
+<p class="eyebrow"><a href="index.html">Touchbeat</a> / Lab</p><h1>How it works, and how far to trust it</h1>
+<h2>The pipeline</h2>
+<p>Everything runs in your browser. MediaPipe finds 33 body points and a general object detector finds the ball. A touch is the moment your toe is closest to the top of the ball, timed against the beat with a short warm-up to absorb your camera's delay.</p>
+<p>The first version used the highest point of the foot. Checking frame by frame showed that fires about 150ms before contact, because the foot lifts and then lands, which is why the detector measures contact instead.</p>
+<h2>Measured touch detection</h2>
+<p>Scored against touches labelled from individual video frames by an AI assistant (Claude), using the same code the game runs.</p>
+<table id="acc"><thead><tr><th>Toe taps</th><th>Touches</th><th>Found</th><th>Precision</th><th>Timing error</th></tr></thead><tbody></tbody></table>
+<p class="note"><strong>Read this before quoting it.</strong> This is a small sample from one player and one camera, and no human coach has checked the labels. The hold-out sections include fast, lateral footwork. Sole rolls and inside-outside have not been measured yet. Footage from a laptop on the floor, which is the real setup, is still needed for a figure that means much.</p>
+<h2>What it learned from coaching videos</h2>
+<p>Posture limits, the form score and the cyan ghost come from skeletons extracted from the videos below. The videos themselves are never published, only anonymous averaged motion. The form score compares your posture with what those players did. It measures similarity to them, not correctness, and is not medical or professional coaching advice.</p>
+<h2>Credits</h2><p>All Creative Commons Attribution on YouTube at the time of use.</p><ul id="credits"></ul>
+<p class="fine">Music is synthesised in the browser. Tracking uses Google's MediaPipe.</p>
+</main><script type="module">
+const pc=x=>Math.round(x*100)+'%';
+fetch('data/accuracy.json').then(r=>r.json()).then(a=>{
+  document.querySelector('#acc tbody').innerHTML=[['Tuning set',a.tuning,a.labelledTouches.tuning],['Hold-out set',a.holdout,a.labelledTouches.holdout]].map(([n,r,t])=>`<tr><td>${n}</td><td>${t}</td><td>${r.tp} (${pc(r.recall)})</td><td>${pc(r.precision)}</td><td>${r.maeMs}ms</td></tr>`).join('');});
+fetch('data/credits.json').then(r=>r.json()).then(c=>{const ul=document.getElementById('credits');for(const v of c){const li=document.createElement('li'),a=document.createElement('a');a.href=v.url;a.textContent=v.title;a.rel='noopener';li.append(a,` by ${v.channel}`);ul.append(li);}});
+</script></body></html>

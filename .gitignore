@@ -1,0 +1,15 @@
+.venv/
+tools/node/node_modules/
+tools/models/
+__pycache__/
+data/extract.log
+.env
+.env.*
+!.env.example
+node_modules/
+venv/
+.venv/
+__pycache__/
+.DS_Store
+*.pem
+*.key
